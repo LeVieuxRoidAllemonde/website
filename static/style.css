@@ -1,0 +1,72 @@
+/* Garamond for elegance ; black for restraint and seriousness ;  by default the background image is the score of the second quintet Op. 115*/
+body {font-family: 'Garamond';font-size: 22px;background-color: black;background-image: url('faurground4.png');  background-repeat: repeat-y;  background-position: center top; background-size: auto; margin: 0;}
+
+/* header */
+header {display: flex;justify-content: center;text-align: center;margin-top: 176px;}
+.bloc-title {border-radius: 10px;color: #d2cdcd;font-weight: bold;margin-top: 80px;margin: 0px 60px 90px 60px;background-color: rgb(58, 56, 56);padding: 10px;}
+
+/* fade-in effect for the main title (change in opacity, and scale for the zoom) */
+#main-title {opacity: 0;transform: scale(0.95); transition: opacity 1.5s ease, transform 1.5s ease;}
+#main-title.visible {opacity: 1;transform: scale(1);}
+
+/* improved nav */
+nav { margin-bottom: 80px; cursor: pointer;}
+.menu {display: flex;justify-content: center; margin-top: 10px;}
+
+/* Button to open the menu (dots) */
+.menu-button {background: rgb(58, 56, 56);border: none;border-radius: 10px;padding: 10px 20px;cursor: pointer;}
+.menu-button img {width: 34px;height: 34px;}       
+.menu-content {display: none;background-color: rgb(58, 56, 56);border-radius: 10px;padding: 10px 20px; width: 650;}
+.menu-content ul {list-style-type: none;margin: 0;padding: 0;display: flex;gap: 20px;justify-content: center;align-items: center;}
+.menu-content a {font-size: 24px;color: #d2cdcd;text-decoration: none;padding: 14px 20px;}
+/* hover effect for the items of the menu */
+.menu-content a:hover {background-color: #636161;border-radius: 6px;}
+.menu ul {list-style: none; margin: 0 auto;padding: 0;width: 550px;height: 70px;background-color: rgb(58, 56, 56);font-weight: bold;border-radius: 10px;display: flex;justify-content: center;align-items: center;gap: 20px;}
+.menu li {display: inline;}
+.menu a {font-size: 24px;color: #d2cdcd;text-decoration: none;padding: 14px 20px;}
+/* close button (cross) */
+.menu-close {font-size: 20px; color: #d2cdcd;background: none;border: none;cursor: pointer;margin-right: 10px;}
+
+/* main */
+
+p { color: #d2cdcd; }h2, h3 {text-align: center;color: #d2cdcd;font-weight: bold;}
+
+/* We created this "block" class to avoid code repetition (in titles, lists, etc.) */
+.bloc {background-color: rgb(58, 56, 56);padding: 20px;margin: 0 60px 100px 60px;border-radius: 10px;}
+.bloc-tight {background-color: rgb(58, 56, 56);padding: 0px;margin: 0 60px 100px 60px;border-radius: 10px;}
+.content {display: flex;gap: 20px;align-items: center;}
+
+/* hover effect and underlinment for the links */
+main a {color: #d2cdcd;text-decoration: none;margin-left: 8px;}
+main a:hover {text-decoration: underline;}
+article {flex: 1;text-align: justify}
+aside {flex: 0 0 500px;}
+aside img {display: block;max-width: 100%;width: 500px;margin: 10px;border-radius: 8px; object-fit: contain;}
+figcaption {text-align: center;font-style: italic;color: #d2cdcd;}
+/* the list of ressources */
+.ressources ul {padding-left: 20px;}
+.ressources ul li {color: #d2cdcd;}
+
+/* the "select a piece menu" in analyses.html and data_example */
+.selection-row {display: flex;gap: 40px;align-items: stretch;}
+/* to have the corresponding plots in aside, centered vertically, and not in a too large svg*/ 
+.plot-aside {flex : 1; display:flex; align-items: center;justify-content: center; flex-direction: column;}
+.plot-aside svg {max-width: 100%;}
+
+/* "show more" button in devlogs.html */
+#show-more-button {display: block;margin: 0px auto;padding: 10px 20px;background-color: rgb(58, 56, 56);color: #d2cdcd;border: none;border-radius: 10px;cursor: pointer;font-family: 'EB Garamond', serif;font-size: 20px;transition: background-color 0.3s ease;}
+#show-more-button:hover {background-color: #636161;}
+
+/* The Footer */
+
+footer {display: flex;justify-content: center;margin: 40px 60px; }
+footer div {background-color: rgb(58, 56, 56);border-radius: 10px;padding: 10px 20px;color: #d2cdcd;font-size: 18px;}
+footer a {color: #d2cdcd;text-decoration: none;margin-left: 8px;}
+footer a:hover {text-decoration: underline;}
+
+/* color of the links, bold  or italic letters */
+a:link {color: #d2cdcd;}
+a:visited {color: #a8a6a6;} /* No need to apply this to the nav since there are no links for now */
+b {color: #d2cdcd}
+
+

@@ -1,0 +1,30 @@
+/* to have the figures aligned horizontally (flex) */
+.content.figures {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/* to center each figure and control its size so that the result is harmonious*/
+figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  flex: 1 1 45%;       
+  min-width: 300px;    
+  max-width: 600px;     
+}
+
+/* Images SVG */
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+ /* background: none; pas de fond noir autour */
+  max-height: 520px; /* limite la hauteur de la figure carrée */
+  object-fit: contain;
+}
