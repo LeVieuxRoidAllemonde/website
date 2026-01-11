@@ -1,0 +1,47 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" href="{{ url_for('static', filename='tdm.jpg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <script src="{{ url_for('static', filename='nav.js') }}" defer></script>
+    <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
+    <!--https://fonts.googleapis.com/css?family=UnifrakturCook:700-->
+    <style>body {
+      background-image: url("{{ url_for('static', filename='faurground.png') }}");}  
+    </style>
+</head>
+<body > <!---Changing the score in background to vary the pleasures : Prélude n°1, Op. 103-->
+    <header>
+    <div class="bloc-title" style="width: 500;">
+        <h1>À-propos — Contact</h1>
+    </div>
+    </header>
+    <main>
+            <section class="bloc-tight">
+                <div class="content">
+                    <aside>
+                        <figure id="ma_photo">
+                            <img src="{{ url_for('static', filename='signal-2025-10-26-15-22-24-696.png') }}" alt="photo_du_webmaster" width="373" height="313">
+                            <figcaption>Sacha Levi Mazloum à l'âge de 20 ans.</figcaption>
+                        </figure>
+                    <div class="ressources bloc-tight">
+                        <h3>Pour me contacter : </h3>
+                        <ul>
+                            <li>Adresse éléctronique : sacha.levimazloum@psl.eu</li>
+                            <li>Téléphone : 06 60 72 34 93</li>
+                            <li><a href="https://www.youtube.com/@cyranodebergeabrac8477">Chaine Youtube (autour de la musique classique).</a> </li>
+                        </ul>
+                    </div>
+                    </aside>
+                        <div class="ressources bloc-tight">
+                        <article>
+                            <p>Je m'appelle Sacha Levi Mazloum, et je suis étudiant en troisième année de CPES "Sciences des données, Arts et Culture", ainsi qu'ancien élève du Lycée Condorcet à Paris. Au cours de ma licence, j'ai eu l'occasion de concilier une ancienne passion pour la musicologie avec l'emploi de méthodes computationnelles par de petits projets d'analyse de données (sur l’évolution du répertoire de l’Opéra de Paris ; la théorie de Deryck Cooke liant tournures mélodiques et expression des émotions en musique). Lors d'un stage à l'Institut Jean Nicod (ENS) en Juin 2025, sous la direction de Nicolas Baumard et Valentin Thouzeau, j'ai également pu étudier l'évolution de la musique dite "triste" et du mode mineur à travers le temps.</p>
+                            <p>Ce site fut créé afin d'y partager les aboutissements d'un dernier travail personnel de recherche entrepris cette année, et motivé par des découvertes récentes en musicologie computationnelle. On y trouvera une<a href="{{ url_for('home') }}">introduction au projet</a>, un<a href="{{ url_for('devlogs') }}">journal de bord (devlogs hebdomadaires)</a>, et bientôt (le projet n'en est encore qu'à ses balbutiements) quelques<a href="{{ url_for('donnees') }}">visualisations de données </a>ainsi qu'un <a href="{{ url_for('analyses') }}">compte-rendu des résultats finaux</a>.</p>
+                        </article>
+                        </div>
+                </div>
+            </section>
+    </main>
+</html>

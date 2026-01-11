@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='tdm.jpg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <title>Analyses</title>
+    <script src="{{ url_for('static', filename='nav.js') }}" defer></script>
+    <style>
+        body {background-image: url("{{ url_for('static', filename='fauground8.png') }}");}
+    </style>
+</head>
+<body> <!---Changing the score in background to vary the pleasures : Pénélope, prélude to the first act-->
+    <header>
+        <div class="bloc-title">
+            <h1 style="width: 650;">Compte-rendu des analyses</h1> 
+        </div>
+    </header>
+    <nav class="menu">
+        <button id="menu-toggle" class="menu-button"><img src="{{ url_for('static', filename='dots2.png') }}" alt="menu icon"></button> <!-- Color of the dots is #d2cdcd -->
+        <div id="menu-content" class="menu-content">
+            <button id="menu-close" class="menu-close">✖</button>
+            <ul class="bloc">
+                <li><a href="{{ url_for('home') }}">Présentation</a></li>
+                <li><a href="{{ url_for('devlogs') }}">Devlogs</a></li>
+                <li><a href="{{ url_for('donnees') }}">Données</a></li>
+                <li><a href="{{ url_for('contacts') }}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section class="bloc">
+            <div class="content">
+                <article>
+                    <h2>Questions de recherche et prédictions.</h2>
+                    <p>Nous avons cherché à résumer dans cette page, la démarche et les résultats d'analyses détaillées dans cet article : <a href="{{ url_for('static', filename='analyses_tdm.pdf') }}" download><strong>De l'intérêt d'une extension du TDM pour l'étude de l'harmonie fauréenne.</strong> </a></p>
+                    <br>
+                    <b>Peut-on répliquer les performances du TDM sur un nouveau corpus d’oeuvres de Gabriel Fauré ? Le TDM original peut-il fournir une modélisation satisfaisante de l’harmonie fauréenne et de son évolution ? Des extensions de ce modèle permettraient-elles d'aboutir à des analyses modélisations plus fines et pertinentes ?</b>
+                    <p>Telles sont les questions que nous nous sommes posées. Ainsi l'objectif de cette étude était double. Dans un premier temps, il s'agissait de répliquer les performances du TDM sur un nouveau corpus et vérifier sa pertinence musicologique dans le cas de Fauré. Nous attendions donc ceci : </p>
+                    <div class="ressources">
+                        <ul>
+                            <li><b>P1 –</b> Le TDM Binomial 2D (quintes + tierces) obtient en moyenne de meilleures performances que les modèles baseline sur le corpus Fauré (Cette variante était la meilleure sur les oeuvres de Liszt, le compositeur le plus proche de Fauré dans le temps et de style parmi ceux étudiés par Lieck, Moss & Rohrmeier.)</li>
+                            <li><b>P2 – </b>Le TDM Binomial (quintes + tierces) est plus perfomant sur les deuxième et troisième périodes que sur la première (idée d’un lien entre la finesse du modèle et la perfomance sur des harmonies complexes que l'on trouve dans Lieck <i>et al.</i>).</li>
+                            <li><b>P3 – </b>Avec ce même modèle, les relations de tierces comptent plus pour les oeuvres des deuxième et troisième période (cela réflèterait des modulations plus hardies, une harmonie qui s’éloigne du cycle des quintes).
+                        </ul>
+                    </div>
+                    <p>Nous avons ensuite voulu utiliser les nouvelles variantes que nous avions implémentés (TDM 3D - avec tritons-, et à centres tonals multiples), sous-réserve de bonnes perfrances, pour tester les prédictions suivantes (inspirées par la thèse de R.C TAIT) :</p>
+                    <div class="ressources">
+                        <ul>
+                            <li><b>P4 – </b>Avec le TDM Binomial 3D (quintes, tierces + tritons) Les relations de tritons comptent plus pour les oeuvres des deuxième et troisième période (cela réflèterait des modulations plus hardies, une harmonie qui s’éloigne du cycle des quintes).</li>
+                            <li><b>P5 – </b>Le TDM avec centre tonals multiples obtient de meilleures performances sur les oeuvres des deuxième et troisième périodes ; en particulier, les centres tonals en jeu sont plus éloignés pour la troisème période. </li>
+                        </ul>
+                    </div>
+                    <p>Chaque hypothèse fut testée statisquement, et les performances des modèles comparées en utilisant la divergence de Kullback-Leibler. Toutefois nous n'encombrerons pas la lecture de cette page de chiffres, coefficents ou autres valeurs p ; nous nous conteterons d'un résumé des résultats importants qu'accompagneront quelques visualisations.</p>
+                </article>
+            </div>
+        </section>   
+        <section class="bloc">
+            <h2 style="text-align: center;">Comparaisons des modèles : Choisir une œuvre</h2>
+            <div class="selection-row">
+                <div class="ressources" ><!-- Displaying random titles of pieces (Four for each pediod) : see app.py-->
+                    <h3>Période 1 (1861-1884) </h3>
+                    <ul>
+                        {% for piece in titles1 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Période 2 (1885-1906)</h3>
+                    <ul>
+                        {% for piece in titles2 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Période 3 (1906-1924)</h3>
+                    <ul>
+                        {% for piece in titles3 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></a></li>
+                        {% endfor %}
+                    </ul>
+                </div> <!-- In aside the corresponding model comparison barplot, by executing pitch_plots.js below -->
+                <aside class="plot-aside">
+                    <h3 style="text-align: center; margin-bottom: 1rem;" id="selected-title">{{ selected_piece.display }}</h3>
+                    <div id="plot-container" style="max-width: 100%;"></div>
+                </aside>
+            </div>
+            <p>Notez en particulier les perfromances de la variante triton (en bleu).</p>
+        </section>
+        <section class="bloc">
+            <h2>Résultats</h2>
+            <div class="content">
+                <article>
+                    <p>En moyenne, sur l’ensemble du corpus, le TDM Binomial (quintes + tierces) obtient des performances significativement meilleures que tous les autres modèles TDM classiques (poisson, gamma) ou les modeèles baseline. Ainsi <b>P1</b> est vérifiée.</p> 
+                    <p>En revanche, nous n’avons pas trouvé de différences significatives de performance pour ce modèle, en fonction de la période des oeuvres considérées. Ainsi <b>P2</b> est invalidée car nous nous attendions à ce que le TDM Binomial soit plus performant sur les 2e et 3e période. La figure ci-dessous permet de le constater : </p>
+                    <p>L’analyse des poids appris par le modèle révèle une plus forte présence des relations de tritons dans les oeuvres de la dernière période de Fauré, par rapport ses oeuvres de jeunesse (p = 0.0017). En revanche pas de différences significatives dans l’importance des relations de tierces selon la période considérée. Cela invalide <b>P3</b>. La figure ci-contre en donne l'intuition</p>
+                </article>
+                <aside> 
+                    <figure>
+                        <img src="{{ url_for('static', filename='losses_by_period.svg') }}" alt="Loss by period boxplot">
+                        <figcaption>Loss (erreur du modèle, ici le TDM Binomial 2D) par période dans la musique de Fauré.</figcaption>
+                    </figure>
+                </aside>
+            </div>
+        </section>
+        <script src="https://d3js.org/d3.v7.min.js"></script> <!-- loading d3.js from the web-->
+        <script> // short script to declare the title and path to newly selected piece, and which will be in picth_plot.js
+            const piece = "{{ selected_title }}";
+            const url = `/data/${piece}`;
+        </script>
+        <script>
+            window.INITIAL_PIECE = {
+                title_file: "{{ selected_piece.title_file|e }}",
+                display: "{{ selected_piece.display|e }}"
+            };
+        </script>
+        <script src="{{ url_for('static', filename='pitch_plot.js') }}"></script> <!-- reconstructing the barplot from the paper with d3.js -->
+        <script src="{{ url_for('static', filename='donnees.js') }}"></script> <!-- Script to load the new plot without returning to the top of the page -->
+    </main>
+    <footer>
+        <div class="footer div">
+        Sacha Levi Mazloum. 2025. <a href="{{ url_for('contacts') }}">Mentions légales.</a>
+        </div>
+    </footer>
+</body>
+</html>

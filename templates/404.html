@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <link rel="icon" href="{{ url_for('static', filename='tdm.jpg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
+    <style>
+        body {background-image: url("{{ url_for('static', filename='requiem4.png') }}");;} /* sad background : Faure's Requiem, Op .48 */
+    </style>
+</head>
+
+<body>
+    <header style="margin-top: 270px;">
+        <div class="bloc-title">
+            <h1 id="bloc-title" style="text-align: center; font-size: 50;">404</h1>
+            <h3>Cette page n'existe pas. <a href="{{ url_for('home') }}">Retour.</a></h3>
+        </div>
+    </header>
+
+    <footer style="margin-top: 185px;">
+        <div class="footer div">
+        Sacha Levi Mazloum. 2025. <a href="{{ url_for('contacts') }}">Mentions légales.</a>
+        </div>
+    </footer>
+</body>
+</html>

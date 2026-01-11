@@ -1,0 +1,114 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devlogs</title>
+    <link rel="icon" href="{{ url_for('static', filename='tdm.jpg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
+    <script src="{{ url_for('static', filename='nav.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='devlogs.js') }}" defer></script>
+    <style>body {
+      background-image: url("{{ url_for('static', filename='faurground3.png') }}");}
+    </style>
+    <!--https://fonts.googleapis.com/css?family=UnifrakturCook:700-->
+
+</head>
+<body> <!---Changing the score in background to vary the pleasures : La Naissance de Vénus, Op. 29-->
+    <header>
+    <div class="bloc-title" style="width: 610;"> <!--making the bloc a bit wider-->
+        <h1 >Journal de bord (derniers "devlogs")</h1>
+    </div>
+    </header>
+    <nav class="menu">
+        <button id="menu-toggle" class="menu-button"><img src="{{ url_for('static', filename='dots2.png') }}" alt="menu icon"></button> <!-- Color of the dots is #d2cdcd -->
+        <div id="menu-content" class="menu-content">
+            <button id="menu-close" class="menu-close">✖</button>
+            <ul class="bloc">
+                <li><a href="{{ url_for('home') }}">Présentation</a></li>
+                <li><a href="{{ url_for('donnees') }}">Données</a></li>
+                <li><a href="{{ url_for('analyses') }}">Analyses</a></li>
+                <li><a href="{{ url_for('contacts') }}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div id="devlogs-container">
+            <div class="content bloc">
+                <article>
+                    <h3>Décembre 2025</h3>
+                    <p>Version finale du jeu de données : 98 œuvres de Fauré (sur environ 120 existantes). Ajout d’informations à propos des pièces : numéro d’opus ou de catalogue, instrumentation, groupe d’œuvre associé, date de composition etc.</p>
+                    <p>2 Tentatives d’implémentation de la variante avec plusieurs centres tonals. La première (insatisfaisante) comme simple mélange de diffusions provenant de 15 centres différents (de do bémol à do dièse en suivant le cycle des quintes ; les do##, fbb etc. Furent evincés comme centres trop improbables pour alléger les calculs). L’idée étant de définir ces centres à l’avance et de simplement demander aux modèles d’apprendre des poids de pondérations. Un simple test sur une portion très réduite du jeu de données a révélé des performances hallucinantes, mais trompeuses, ou du moins d’un intérêt musicologique très faible (voire obstacles). Nous nous sommes donc lancés dans une autre implémentation, plus ambitieuse en ce qu’elle s’écartait un peu de la logique originale du TDM. L’idée était de considérer le centre tonal comme un paramètre appris, ce qu’il n’était pas tout à fait jusqu’à présent. Le TDM commençait par apprendre les poids de transitions et de longueur de chemins en quelque sorte dans le vide, ou à partir d’un centre abstrait, et à la fin seulement la divergence KL entre distribution réelle et prédite était calculée pour chaque centre possible (35 notes) et celui qui la minimisait était retenu (l’argmin en quelque sorte). Là notre idée était de changer quelque peu la logique en proposant un paramètre “nombre de centres” – notons n sa valeur – et en demandant au modèle d’apprendre une combinaison d’au plus n centres, changés au fur et à mesure et non pas décidés à la fin. Cela en pénalisant l’apprentissage de centres proches sur le Tonnetz, pour éviter des redondances peu informatives musicalement mais efficace d’un point de vue de la loss. Pour ce faire : création d’une matrice de distance entre les notes sur le Tonnetz (d = longueur du plus court chemin entre 2 notes en passant par n’importe quelles transitions : une quinte, une tierce, un triton comptent tous pour 1). Nouveaux tests sur quelques pièces peu concluants et difficile de trouver une métrique pour analyser les résultats : dispersion des centres sur le Tonnetz, entropie du mélange de centres ?</p>
+                    <p>Lancement de tous les autres modèles (baseline TDM poisson, binomial, gamma, binomial triton) sur le corpus complet, sans analyser encore les résultats.</p>
+                    <p>Pré-enregistrement des prédictions sur OSF (disponibles sur le site d’ici 24h normalement : “Using and extending the Tonal Diffusion Model to study Gabriel Fauré's harmonic language.”).</p>
+                    <p>Début de rédaction de l’article (parties Introduction et Données réécrites et enrichies).</p>
+                </article>
+            </div>
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <article >
+                    <h3>23/11/2025 - 30/11/2025</h3>
+                    <p><b>Obstacles</b> : une PSL Week et des problèmes de santé nous ont empêché de faire beaucoup plus que d’améliorer un peu notre site internet, et d’ajouter 2 pièces au jeu de données.</p>
+                </article>
+            </div>
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <article >
+                    <h3>17/11/2025 - 23/11/2025. Corrections apportées au MVP. Implémentation améliorée du TDM binomial triton.</h3>
+                    <p>Tenant compte des retours faits au MVP, nous avons réécrit le paragraphe d’introduction TDM de notre article en tâchant de le rendre plus accessible, par l’ajout d’exemples, de définitions générales (harmonie, modèle de diffusion). Nous avons décidé de restreindre notre projet à l’étude de la musique de Gabriel Fauré. En effet, s’intéresser également à celle de Scriabine aurait été passionnant, mais cela reviendrait à faire deux études, avec hypothèses, prédictions et variantes du TDM spécifiques à inventer différentes, ce qui n’est pas très raisonnable. D’autant que si la musique de Fauré nous est maintenant bien connue, nous sommes encore loin d'être experts de celle de Scriabine. Bref, mieux vaut sans doute privilégier ici la qualité à la quantité..</p>
+                    <p>Nous avons réglé le problème des incohérences entre les résultats du MVP et ceux obtenus la semaine d’avant (pour le TDM poisson) : nous avions par erreur changé les paramètres lors de l’appel au modèle, d’où les différences de performance. Nulle erreur dans l’implémentation du TDM.</p>
+                    <p>Pour la variante Binomiale triton, nous avons transformé ce qui n’était qu’un simple jeu dans les paramètres, en une réelle implémentation ajoutée au module TonalDiffusionModel.py. Nous avons ajouté les intervalles de triton dans le code, mais leur avons assigné a priori un poids plus faible que pour les quintes et les tierces. Ainsi le modèle s’est révélé plus adapté qu’avant aux pièces de Bach et Beethoven, tout en restant particulièrement performant sur celles de Fauré.</p>
+                </article>
+            </div>
+            <div class="content bloc"style="margin-bottom: 40px;">
+                <article >
+                    <h3>13/10/2025 - 20/10/2025. Tests satisfaisants du TDM Poisson. Réplication convaincante des résultats de l’article. Amélioration du fonctionnement de pitchplots.</h3>
+                    <p>Cette semaine nous avons enfin réussi à produire un script fonctionnel de test du TDM dans savariante Poisson. Celui-ci permet de charger et d’entraîner modèle sur le corpus Bach-Beethoven-Liszt utilisé dans l’article, puis de lancer la diffusion sur chacune des pièces à partir des poids du Tonnetz appris, et enfin de tracer des figures pour comparer les distributions réelles avec celles générées par le TDM. </p>
+                    <p>Forts de ce succès, nous avons ajouté au script un procédure de test des modèles baseline sur lemême corpus (modèles gaussiens, de distribution statique simples ou à plusieurs profiles, c’est àdire des modèles sans diffusion). Nous avons ainsi pu comparer les performances des modèles àl’aide de figures et de moyennes de divergences KL, et conclure à la supériorité du TDM Poisson. Ceci constitue donc une réplication des résultats fondamentaux de l’article, certes limitée à uneseule des 3 variantes du TDM (Poisson, Binomale, Gamma).</p>
+                    <p>Par ailleurs, nous avons fixé un problème subsistant dans le code source de pitchplots. Il est désormais possible de représenter la “heatmap-Tonnetz” (nous lançons l’expression) de n’importe quelle partition mscz avec les dernières versions de Pandas, Matplotlib, etc.Nous avons enfin transcrit trois nouvelles partitions de Fauré pour les ajouter à notre corpus (il ne nous manque plus que deux partitions), et consacré un peu de temps pour nous former à PyTorch.</p>
+                </article>
+            </div>
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <article>
+                    <h3>06/10/2025 - 12/10/2025 Tests TDM Poisson fonctionnels mais insatisfaisants. Poursuite de la complétion du corpus. Découverte et utilisation de la librairie pitcplots. Insights tardifs, mais salutaires, sur le fonctionnement du TDM.</h3>
+                    <p>Après moult corrections de code, debuggs et test infructueux nous nous sommes rendu compteque nous avions mal compris un principe fondamental du TDM ! Il ne s’agit d’un modèle génératif du ton ou de musique (à l’instar du schuBERT, de M. van Berchem) : c’est un modèle probabiliste descriptif, destiné à modéliser et comparer des distributions tonales entre pièces, styles oucompositeurs. Ainsi notre démarche consistant à “entrainer” le modèle sur les 31 premières sonates de Beethoven et à “tester” sur la dernière était vouée à l’échec. Le modèle “s’entraine” au fur et àmesure qu’il passe sur les notes d’une pièce et apprend ainsi des paramètres latents (poids des transitions d’une note à une autre sur le Tonnetz) pour regénérez un profile collant le plus possible à la vraie distribution. </p>
+                    <p>Forts de ces nouveaux insights nous avons réalisés des tests sur les 32 sonates de Beethoven en entrainant plus longtemps et en récupérant les distributions générées pour les pièces immédiatement après (pas de tests débiles avec les poids appris sur des œuvres nouvelles). Notre démarche fut couronnée de succès (plus de distribution uniformes) mais les résultats laissaient penser à une diffusion assez laborieuse. Il nous reste donc à revenir des variantes (qui ne marchaient pas avant), jouer sur les paramètres, afin de parvenir à des résultats aussi satisfaisants que ceux des auteurs. </p>
+                    <p>Nous nous sommes également rendus compte qu’une librairie python avait déjà été créée par Fabian Moss pour plot les distributions de notes sous forme de heatmap en Tonnetz. Nous avons donc pris en main (il a fallu adapter le code source de certaines fonctions, voir problèmes rencontrés) et testé avec succès pitchplots, bien plus riche que notre début de librairie “maison”. </p>
+                    <p>Nous avons en outre consacré quelques heures à la transcription de 3 pièces nouvelles pour le corpus.</p>
+                </article>
+            </div>
+             <!-- the following devlogs won't be shown initially -->
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <article>
+                    <h3>29/09/2025 - 05/10/2025. Poursuite des tests infructueux du TDM. Avancée dans la constitution du corpus. Implémentation personnelle des graphes “Tonnetz” pour représenter les distributions. </h3>
+                    <p>Cette semaine, nous avons continué d’adapter le code fourni par les auteurs afin de l’évaluer sur un petit corpus de test : les 32 sonates de Beethoven. Nous n’avons pu faire fonctionner qu’un modèle de type Poisson simple. Mais le TDM se décline en bien d’autres variantes (binomiale, gamma) pour les distributions a priori des paramètres appris. Il nous reste à les explorer, et donc à adapter de nouveau le code de façon robuste pour cela.</p>
+                    <p>En ce qui concerne les données, notre objectif consiste toujours en la constitution d’un corpus Fauré provisoire de 60 œuvres (sur les 120 à peu près, écrites par le compositeur) réparties en 20 œuvres par période. Durant ces quelques jours, nous avons commencé de compléter la vingtaine de pièces déjà présentes dans le PDMX en choisssant aléatoirement 40 œuvres (numéros d’opus). Environ la moitié d’entre elles, appartenant principalement aux deux premières périodes, avaient déjà été transcrites par des utilisateurs de musescore et nous les avons téléchargées. Nous avons également consacré quelques heures à la transcription de 5 autres pièces assez courtes, heureusement pour nous (Nous considérons d’ailleurs qu'un mouvement d’une oeuvre = une pièce).</p>
+                    <p>Nous nous sommes également essayés (avec succès) à l’implémentation d’une fonction pour plots des distributions de notes sous forme de Tonnetz/heatmap, en nous inspirant des figures de l’article. Toutefois notre code ne permet pas encore d’adapter dynamiquement la représentation aux oeuvres pour mettre le ton dominant au centre du Tonnetz.</p>
+                </article>
+            </div>
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <h3>23/09/2025 - 28/09/2025 Lecture approfondie des scripts d’implémentation et d’évaluation du TDM fournis par les créateurs. Test du code sur un morceau. Idées pour la préparation du corpus.</h3>
+                <p>Sur le <a href="https://github.com/DCMLab/tonal-diffusion- model/tree/TISMIR">github du TDM</a>, on trouve 3 fichiers : corpus.tsv, tonal_diffusion_model.py, evaluation.py. Nous avons longuement étudié les 2 scripts python - chacun de quelques 500+ lignes en POO et PyTorch -, avons ajouté des commentaires utiles à la compréhension (ceux-ci manquaient).</p>
+                <p>Nous avons ensuite essayé de lancer un test très simple du script d’évaluation : un seul modèle, avec distribution de Poisson et paramètres par défaut ; et un jeu de données restreint à une seule pièce. Notre objectif était seulement de débugger rapidement le code pas d’entrainer/tester le modèle proprement.</p>
+                <p>Hélas, après plusieurs heures passées à adapter/changer un peu le code, nous n’avons pas réussi à nous défaire d’erreurs lors de notre test. Le problème semblerait apparaitre lors de l’optimisation, et serait dû à des tailles de tenseurs incohérentes (au moment d’un calcul réalisé à l’aide la convention de sommation d’Einstein, torch.einsum). </p>
+                <br>
+                <p>Le TP3C ne contient que 9 pièces de Fauré (œuvres vocales de jeunesse), et 88 de scriabine (mais uniquement des pièces de jeunesse également). Il s’agit donc de le compléter. Le <a href="https://arxiv.org/abs/2409.10831">PDMX </a> est un large jeu de données de fichiers xml scrapés depuis musescore. Nous en avons téléchargé les métadonnées. Résultat : 23 oeuvres supplémentaires récupérées pour Fauré dont seulement 2 de la dernière période. (18 oeuvres de plus pour Scriabine mais nous le laissons de côté pour le moment). Nous avons récupéré tous les fichiers xml correspondants, et les avons transformés en mscx mais cela reste donc très insatisfaisant.</p>
+            </div>
+            <div class="content bloc" style="margin-bottom: 40px;">
+                <article>
+                    <h3>16/09/2025 - 23/09/2025. Familiarisation avec ms3 + début de lecture de la thèse de R. C. Tait sur <i>Le langage musical de Gabriel Fauré.</i></h3>
+                    <p>Un coup d’oeil jeté sur l’implémentation du TDM, nous a appris que celui-ci prend en entrée la distribution des pitch-classes d’une pièce de musique (nombre de C, de D, de F#, Gb, etc?), sans équivalence enharmonique. Autrement dit impossible de prendre des Midi (où Gb = F# par exemple) pour les données. Il faut dénombrer les pitch-classes exactes à partir de fichiers mscx (musescore).</p>
+                    <p>La <a href="https://ms3.readthedocs.io/en/latest/">librairie python ms3 </a> nous en offrait la possibilité. Nous avons dû l’installer en passant par Git. Hélas, la documentation nous a semblé laborieusement organisée et rédigée. Le parsing des partitions doit se faire directement avec l’invite de commandes ; et pour que celui-ci fonctionne il faut préalablement créer un fichier de métadonnées sur les partitions que l’on souhait traiter (mal indiqué dans la documentation). Une fois ces étapes réalisées un test sur une de nos partitions personnelles s’est révélé concluant : nous avons récupéré un tsv des notes de la partition et créé un script python pour effectuer le comptage des pitch-classes à partir d’un tel tsv.</p>
+                    <p>De la lecture du début de la thèse sur Fauré, nous avons retenu qu’on peut diviser sa musique en 3 périodes cohérentes stylistiquement : 1861-1884, modulations une tierce majeur en dessous, accords napolitains, pas de modalité ; 1884-1909 : accords enrichis (9e, 13e, accords de sixte); modulation par rapport de quarte, un peu de modalité ; 1909-1923, mélange de diatonisme et de modalité très présente, modulations très fréquentes mais accords plus simples que dans la seconde période.</p>
+                    <p>Tout cela nous fournit donc des hypothèses précises à tester, et la possibilité de comparer les œuvres par période (de façon catégorielle), plutôt qu’en prenant la date de composition de chacune (régression ?). </p>
+                </article>
+            </div>
+            <!-- button to load further devlogs when clicked (see devlogs.js)-->
+            <button id="show-more-button">Afficher plus</button>
+        </div>
+    </main>
+    <footer>
+        <div class="footer div">
+        Sacha Levi Mazloum. 2025. <a href="{{ url_for('contacts') }}">Mentions légales.</a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data</title>
+    <link rel="icon" href="{{ url_for('static', filename='tdm.jpg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
+    <script src="{{ url_for('static', filename='nav.js') }}" defer></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--some specific css to align the display the figrures harmoniously-->
+    <style> 
+        body {background-image: url("{{ url_for('static', filename='faurground2.png') }}");} 
+    </style>
+    <!--https://fonts.googleapis.com/css?family=UnifrakturCook:700-->
+</head>
+<body><!---Changing the score in background to vary the pleasures : Trio, Op. 120, second movement-->
+    <header>
+    <div class="bloc-title">
+        <h1 style="width: 650;">Données : le corpus Fauré</h1> 
+    </div>
+    </header>
+    <nav class="menu">
+        <button id="menu-toggle" class="menu-button"><img src="{{ url_for('static', filename='dots2.png') }}" alt="menu icon"></button> <!-- Color of the dots is #d2cdcd -->
+        <div id="menu-content" class="menu-content">
+            <button id="menu-close" class="menu-close">✖</button>
+            <ul class="bloc">
+                <li><a href="{{ url_for('home') }}">Présentation</a></li>
+                <li><a href="{{ url_for('devlogs') }}">Devlogs</a></li>
+                <li><a href="{{ url_for('analyses') }}">Analyses</a></li>
+                <li><a href="{{ url_for('contacts') }}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section class="bloc">
+            <div class="content">
+                <article>
+                    <p>Le visiteur est invité à séléctionner une des oeuvres proposées. Il verra apparaitre une heatmap de la distribution des notes sous forme de Tonnetz ainsi qu'un graphique des performances comparées des modèles (TDM, baseline) sur cette oeuvre.</p>
+                </article>
+            </div>
+            <h2 style="text-align: center;">Choisir une œuvre</h2>
+            <div class="selection-row">
+                <div class="ressources"> <!-- Displaying random titles of pieces (Four for each pediod) : see app.py-->
+                    <h3>Période 1 (1861-1884) </h3>
+                    <ul>
+                        {% for piece in titles1 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Période 2 (1885-1906)</h3>
+                    <ul>
+                        {% for piece in titles2 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Période 3 (1906-1924)</h3>
+                    <ul>
+                        {% for piece in titles3 %}
+                            <li><a class="piece-link" href="#" data-title="{{ piece.title }}" data-opus="{{ piece.opus }}" data-no="{{ piece.no }}" data-mov="{{ piece.mov }}" data-title-file="{{ piece.title_file }}"> {{ piece.display }} </a></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <aside class="plot-aside">
+                    <h3 id="selected-title"style="text-align: center; margin-bottom: 1rem;">{{ selected_piece.display }}</h3>
+                    <img id="heatmap-img"src="{{ url_for('static', filename=svg_filename) }}"alt="Plot de {{ selected_piece.display }}"style="max-width: 100%; height: auto; border: 1px solid #666;">
+                </aside>
+                <script>
+                    window.INITIAL_PIECE = {
+                        title_file: "{{ selected_piece.title_file|e }}",
+                        display: "{{ selected_piece.display|e }}"
+                    };
+                </script>
+            </div>
+            <p style="text-align: justify;">On trouve dans ce jeu de données la distribution des notes (de Fbb B##) de 98 oeuvres de Gabriel Fauré, ainsi qu'une série d'information permettant d'identifier celles-ci : numéro d'opus, numéro de mouvement, nom du recueil, date de composition, etc. Pour le constituer, nous nous sommes appuyés sur les 18 partitions Musicxml de Fauré, téléchargeables via le PDMX (Long et al., 2024, large corpus de partitions scrapées depuis Musescore). Nous avons complété par d’autres partitions au format Musicxml, que nous avons scrapées depuis Musescore ou transcrites nous-mêmes si indisponibles. Dans ce dernier cas, nous n’avons pris que des réductions piano pour les pièces orchestrales ; avons privilégé les mouvements isolés aux œuvres entières, et rien transcrit d’autres que les notes (pas d’indication de tempo, d’expression etc. pour nous épargner du temps perdu inutilement). Toutes ces œuvres furent sélectionnées en choisissant aléatoirement un numéro d’opus, et de manière à obtenir 20 pièces pour chaque période.</p>
+            <p style="text-align: justify;">Les graphes ont été réalisés à l'aide de la librairie<a href="">ms3</a> mise à jour par nous-mêmes.</p>
+            <!-- Script to load the new plot without returning to the top of the page -->
+            <script src="{{ url_for('static', filename='donnees.js') }}"></script>
+        </section>
+    </main>
+    <footer>
+        <div class="footer div">
+        Sacha Levi Mazloum. 2025. <a href="{{ url_for('contacts') }}">Mentions légales.</a>
+        </div>
+    </footer>
+
+</body>
+</html>
