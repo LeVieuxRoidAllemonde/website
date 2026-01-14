@@ -59,11 +59,11 @@ def get_titles_and_selection():
         return [
             {
                 "title": r[0],
-                "opus": r[1][:-2],
-                "no": r[2][:-2] or "",
+                "opus": str(r[1]).rstrip(".0"),
+                "no": str(r[2]).rstrip(".0") if r[2] else "",
                 "mov": r[3] or "",
                 "title_file" : r[4],
-                "display": format_piece_title(r[0], r[1][:-2], r[2][:-2], r[3])
+                "display": format_piece_title(r[0], str(r[1]).rstrip(".0"), str(r[2]).rstrip(".0"), r[3])
             }
             for r in rows
         ]
@@ -87,11 +87,11 @@ def get_titles_and_selection():
     # dictionnary for the currently selected piece
     selected_piece = {
         "title": r[0],
-        "opus": r[1][:-2],
-        "no": r[2][:-2] or "",
+        "opus": str(r[1]).rstrip(".0"),
+        "no": str(r[2]).rstrip(".0") if r[2] else "",
         "mov": r[3] or "",
         "title_file" : r[4],
-        "display": format_piece_title(r[0], r[1][:-2], r[2][:-2], r[3])
+        "display": format_piece_title(r[0], str(r[1]).rstrip(".0"), str(r[2]).rstrip(".0"), r[3])
     }
 
     conn.close()
@@ -165,6 +165,7 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
+
 
 
 
