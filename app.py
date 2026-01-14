@@ -5,14 +5,16 @@ app = Flask(__name__)
 
 
 # connection to the database
-def get_connection():
+"""def get_connection():
     return psycopg2.connect(
         host="localhost", # to be potentially replaced
         database="tpc", # import_csv.py should have been launch one time 
         user="postgres", # to be potentially replaced
         password="" # to be replaced
-    )
+    )"""
 
+def get_connection():
+    return psycopg2.connect(os.environ["DATABASE_URL"])
 
 # to save the cookie message
 app.secret_key = 'dev'
@@ -163,6 +165,7 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
+
 
 
 
