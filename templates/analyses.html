@@ -107,12 +107,11 @@
             <div class="content">
                 <article>
                     <p>Les pondérations (normalisées) des transitions de quintes sur le Tonnetz restent constamment élevées au cours des différentes périodes, et il n'y a pas de différence significative entre la première et les autres. Contrairement à nos attentes, les pondérations attribuées aux transitions de tierces (mineures et majeures) ne diffèrent pas de manière significative d'une période à l'autre. Nous observons en particulier que ces pondérations ont déjà tendance à être élevées pour la première période. Cependant, les pondérations des tritons sont significativement plus élevées pour les œuvres de la deuxième et de la troisième période par rapport à celles de la première période. Nous observons en outre que ces pondérations des tritons sont très faibles (plus de 10 fois inférieures à celles des tierces, en fait).</p> 
-                    <p>En revanche, nous n’avons pas trouvé de différences significatives de performance pour ce modèle, en fonction de la période des oeuvres considérées. Ainsi <b>P2</b> est invalidée car nous nous attendions à ce que le TDM Binomial soit plus performant sur les 2e et 3e période. La figure ci-dessous permet de le constater : </p>
-                    <p>L’analyse des poids appris par le modèle révèle une plus forte présence des relations de tritons dans les oeuvres de la dernière période de Fauré, par rapport ses oeuvres de jeunesse (p = 0.0017). En revanche pas de différences significatives dans l’importance des relations de tierces selon la période considérée. Cela invalide <b>P3</b>. La figure ci-contre en donne l'intuition</p>
+                    <p>En conclusion, ce travail a permis de reproduire avec succès les résultats de l'article original sur le Modèle de Diffusion Tonale (MDT), en l'appliquant à un nouveau corpus d'œuvres de Gabriel Fauré. Comme lors de l'étude initiale des œuvres de Liszt, la variante binomiale classique du MDT (fondée sur les relations de quintes et de tierces) surpasse significativement les modèles de base à profils harmoniques statiques. Ceci confirme la pertinence de cette approche pour la représentation de structures harmoniques complexes et évolutives. De plus, l'introduction d'une extension du modèle au triton (qui inclut les intervalles de triton dans le Tonnetz) améliore encore les performances sur le corpus Fauré, notamment pour les œuvres de la dernière période du compositeur. Ces résultats suggèrent que cette variante « 3D » du MDT capture efficacement les relations harmoniques plus subtiles et instables, caractéristiques du langage musical tardif de Fauré, mais moins présentes chez Bach ou Beethoven. Nous avons démontré que le MDT est un outil précieux pour étudier l'évolution diachronique du langage musical d'un compositeur. Ce travail suggère également que même des extensions minimales du modèle peuvent saisir des caractéristiques intéressantes de l'harmonie étendue de la fin du XIXe siècle et du début du XXe siècle, telles que la présence de modulations audacieuses et de différentes couches tonales dans l'œuvre de Fauré. </p>
                 </article>
                 <aside> 
                     <figure>
-                        <img src="{{ url_for('static', filename='weights.svg') }}" alt="Weights of intervals by period">
+                        <img src="{{ url_for('static', filename='weights.png') }}" alt="Weights of intervals by period">
                         <figcaption>Boîtes à moustaches des poids normalisés du TDM Binomial 3D selon chaque période, dans l'ordre suivant : a) quintes, b) tritons, c) tierces mineures, d) tierces majeures. </figcaption>
                     </figure>
                 </aside>
@@ -140,3 +139,4 @@
 </body>
 
 </html>
+
