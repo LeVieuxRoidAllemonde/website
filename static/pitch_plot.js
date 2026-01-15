@@ -73,6 +73,7 @@ function drawPlotFromCSV(csvText) {
     const models = [
             { key: "dist_binomial_tritones",         label: "TDM (binomial) tritones",     color: "blue" },
             { key: "dist_binomial",       label: "TDM (binomial)",        color: "orange" },
+            { key : "dist_poisson",       label: "TDM (poisson)",         color: "yellow"},
             { key: "dist_gamma",          label: "TDM (gamma)",           color: "brown" },
             { key: "dist_factor_poisson", label: "FactorModel poisson", color: "red" },
             { key: "dist_static",         label: "SimpleStaticModel",     color: "green" },
@@ -125,4 +126,5 @@ function drawPlotFromCSV(csvText) {
             .attr("alignment-baseline", "middle")
             .style("fill", "white");
                
+
 }
