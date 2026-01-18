@@ -26,7 +26,7 @@ def format_piece_title(title, opus, no, mov):
     parts = [f"{title}, Op. {opus}"]
 
     # in case there a number within the opus is precised
-    if no and no is not None:
+    if no:
         parts.append(f"n°{no}")
 
     # in case there a mvoement number is precised
@@ -165,6 +165,7 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
+
 
 
 
